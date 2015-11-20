@@ -38,7 +38,7 @@
  */
 module.exports = {
     enable: hijackPrepareStackTrace,
-    disable: releasePrepareStackFrame,
+    disable: releasePrepareStackTrace,
     get: getV8Stack,
 };
 
@@ -69,7 +69,7 @@ function hijackPrepareStackTrace() {
 /**
  * Disable the capture of V8's error stack traces.
  */
-function releasePrepareStackFrame() {
+function releasePrepareStackTrace() {
     delete Error.prepareStackTrace;
     if (prepareStackTrace) {
         Error.prepareStackTrace = prepareStackTrace;
@@ -91,7 +91,7 @@ function _prepareStackTrace(error, v8StackTrace) {
         error.__v8stack__ = v8StackTrace;
     }
 
-    releasePrepareStackFrame();
+    releasePrepareStackTrace();
     stack = error.stack;
     hijackPrepareStackTrace();
 
