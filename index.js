@@ -85,12 +85,11 @@ function releasePrepareStackTrace() {
  *                            https://github.com/v8/v8/wiki/Stack%20Trace%20API}
  */
 function _prepareStackTrace(error, v8StackTrace) {
-    var stack;
-
     if (error) {
         error.__v8stack__ = v8StackTrace;
     }
 
+    var stack;
     releasePrepareStackTrace();
     stack = error.stack;
     hijackPrepareStackTrace();
