@@ -48,7 +48,7 @@ var prepareStackTrace;
  * Enable the capture of V8's error stack traces.
  */
 function hijackPrepareStackTrace() {
-    if (Error.prepareStackTrace !== _prepareStackTrace) {
+    if (Error.prepareStackTrace !== hijackPrepareStackTrace) {
         prepareStackTrace = Error.prepareStackTrace;
     }
 
@@ -56,7 +56,7 @@ function hijackPrepareStackTrace() {
 
     Object.defineProperty(Error, "prepareStackTrace", {
         get: function() {
-            return _prepareStackTrace;
+            return hijackPrepareStackTrace;
         },
         set: function(value) {
             prepareStackTrace = value;
@@ -84,7 +84,7 @@ function releasePrepareStackTrace() {
  * @param {CallSite[]} v8StackTrace [V8's stack trace]{@link
  *                            https://github.com/v8/v8/wiki/Stack%20Trace%20API}
  */
-function _prepareStackTrace(error, v8StackTrace) {
+function hijackPrepareStackTrace(error, v8StackTrace) {
     if (error) {
         error.__v8stack__ = v8StackTrace;
     }
