@@ -90,9 +90,13 @@ function _prepareStackTrace(error, v8StackTrace) {
     }
 
     var stack;
-    releasePrepareStackTrace();
-    stack = error.stack;
-    hijackPrepareStackTrace();
+    if (prepareStackTrace) {
+        stack = prepareStackTrace.apply(this, arguments);
+    } else {
+        releasePrepareStackFrame();
+        stack = error.stack;
+        hijackPrepareStackTrace();
+    }
 
     return stack;
 }
