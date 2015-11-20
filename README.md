@@ -18,7 +18,7 @@ v8stack.enable();
 
 // Access V8's stack trace of an error object
 var error = new Error();
-var errorStack = v8stack.get(error);
+var errorStack = v8stack.evaluate(error);
 console.log(errorStack[0].getTypeName());
 
 // If wanted, the capture can be stopped
@@ -27,7 +27,7 @@ v8stack.disable();
 // Beware that error stacks are evaluated lazily.
 // Evaluation can be triggered by calling `v8stack.get(error)`
 // or by evaluating `error.stack`.
-// After invoking `v8stack.disable()`, calls to `v8stack.get(error)`
+// After invoking `v8stack.disable()`, calls to `v8stack.evaluate(error)`
 // with errors whose stack evaluation hasn't been trigerred
 // will return 'undefined'.
 ```

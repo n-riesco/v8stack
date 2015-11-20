@@ -10,7 +10,7 @@ v8stack.enable();
 Error.stackTraceLimit = stackTraceLimit;
 error = new Error();
 assert.strictEqual(
-    v8stack.get(error).length, stackTraceLimit,
+    v8stack.evaluate(error).length, stackTraceLimit,
     "Error.stackTraceLimit not honoured"
 );
 v8stack.disable();
@@ -26,7 +26,7 @@ prepareStackTrace = function() {
 Error.prepareStackTrace = prepareStackTrace;
 error = new Error();
 assert.strictEqual(
-    v8stack.get(error).length, stackTraceLimit,
+    v8stack.evaluate(error).length, stackTraceLimit,
     "Error.stackTraceLimit not honoured"
 );
 assert.strictEqual(

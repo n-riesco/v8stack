@@ -39,7 +39,7 @@
 module.exports = {
     enable: hijackPrepareStackTrace,
     disable: releasePrepareStackTrace,
-    get: getV8Stack,
+    evaluate: getV8Stack,
 };
 
 var prepareStackTrace;
