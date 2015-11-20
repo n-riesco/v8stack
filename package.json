@@ -1,6 +1,6 @@
 {
     "name": "v8stack",
-    "version": "0.0.4",
+    "version": "0.1.0",
     "description": "Access V8 error stack traces",
     "keywords": [
         "V8",
