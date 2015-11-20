@@ -24,6 +24,10 @@ console.log(errorStack[0].getTypeName());
 // If wanted, the capture can be stopped
 v8stack.disable();
 
-// Calls to `v8stack.get()` with errors created while the capture is disabled
-// will return `undefined`.
+// Beware that error stacks are evaluated lazily.
+// Evaluation can be triggered by calling `v8stack.get(error)`
+// or by evaluating `error.stack`.
+// After invoking `v8stack.disable()`, calls to `v8stack.get(error)`
+// with errors whose stack evaluation hasn't been trigerred
+// will return 'undefined'.
 ```
