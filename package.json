@@ -1,0 +1,25 @@
+{
+    "name": "v8stack",
+    "version": "0.0.1",
+    "description": "Access V8 error stack traces",
+    "keywords": [
+        "V8",
+        "prepareStackTrace",
+        "captureStackTrace",
+        "stack",
+        "trace"
+    ],
+    "author": {
+        "author": "Nicolas Riesco",
+        "email": "enquiries@nicolasriesco.net",
+        "url": "http://www.nicolasriesco.net/"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/n-riesco/v8stack.git"
+    },
+    "bugs": {
+        "url": "https://github.com/n-riesco/v8stack/issues"
+    },
+    "license": "BSD-3-Clause"
+}
