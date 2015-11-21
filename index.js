@@ -43,27 +43,30 @@ module.exports = {
 };
 
 var prepareStackTrace;
+var isHijackPaused;
 
 /**
  * Enable the capture of V8's error stack traces.
  */
 function hijackPrepareStackTrace() {
-    if (Error.prepareStackTrace !== v8stackPrepareStackTrace) {
-        prepareStackTrace = Error.prepareStackTrace;
-    }
-
-    delete Error.prepareStackTrace;
+    var tmp = Error.prepareStackTrace;
 
     Object.defineProperty(Error, "prepareStackTrace", {
         get: function() {
-            return v8stackPrepareStackTrace;
+            return (
+                isHijackPaused ? prepareStackTrace : v8stackPrepareStackTrace
+            );
         },
         set: function(value) {
-            prepareStackTrace = value;
+            if (value !== v8stackPrepareStackTrace) {
+                prepareStackTrace = value;
+            }
         },
         configurable: true,
         enumerable: false,
     });
+
+    Error.prepareStackTrace = tmp;
 }
 
 /**
@@ -85,20 +88,16 @@ function releasePrepareStackTrace() {
  *                            https://github.com/v8/v8/wiki/Stack%20Trace%20API}
  */
 function v8stackPrepareStackTrace(error, v8StackTrace) {
-    if (!error) {
-        return;
-    }
-
-    error.__v8stack__ = v8StackTrace;
-
     var stack;
-    if (prepareStackTrace) {
-        stack = prepareStackTrace.apply(this, arguments);
-    } else {
-        module.exports.disable();
+
+    isHijackPaused = true;
+
+    if (error) {
+        error.__v8stack__ = v8StackTrace;
         stack = error.stack;
-        module.exports.enable();
     }
+
+    isHijackPaused = false;
 
     return stack;
 }
